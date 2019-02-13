@@ -1,8 +1,8 @@
-# Bash utility scripts
+# Shell utility scripts
 
 ## Overview
 
-Collection of (half-way decent) Bash utility scripts.
+Collection of shell utility scripts written in Bash.
 
 ## List of scripts
 
