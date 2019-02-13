@@ -1,6 +1,6 @@
 # default.nix scripts repository expression
 
-let scriptDer = pkg:
+let mkScriptDerivation = pkg:
     with import <nixpkgs> {};
         let path      = ./. + "/${pkg.dir}";
             installer = '' mkdir -p $out/bin
@@ -14,10 +14,9 @@ let scriptDer = pkg:
             ; phases       = "installPhase fixupPhase"
             ; installPhase = installer
             ; meta         = { license     = stdenv.lib.licenses.bsd3
-                             ; maintainers = [ "mwr" ]
+                             ; maintainers = [ "Mark W. Ruszczycky" ]
                              ; description = pkg.description
                              ; }
             ; };
-in  { backup-configs = scriptDer ( import ./backup-configs )
-    ; packup         = scriptDer ( import ./packup         )
+in  { packup = mkScriptDerivation ( import ./packup )
     ; }
