@@ -9,7 +9,7 @@ let mkScriptDerivation = pkg:
                         '';
         in  stdenv.mkDerivation rec
             { name         = "${pkg.dir}-${pkg.version}"
-            ; version      = "1.0"
+            ; version      = "1.1"
             ; src          = builtins.toPath "${path}/main.sh"
             ; phases       = "installPhase fixupPhase"
             ; installPhase = installer
