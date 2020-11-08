@@ -10,7 +10,7 @@ let mkScriptDerivation = pkg:
         in  stdenv.mkDerivation rec
             { name         = "${pkg.dir}-${pkg.version}"
             ; version      = "1.1"
-            ; src          = builtins.toPath "${path}/main.sh"
+            ; src          = "${path}/main.sh"
             ; phases       = "installPhase fixupPhase"
             ; installPhase = installer
             ; meta         = { license     = stdenv.lib.licenses.bsd3
@@ -18,5 +18,7 @@ let mkScriptDerivation = pkg:
                              ; description = pkg.description
                              ; }
             ; };
-in  { packup = mkScriptDerivation ( import ./packup )
-    ; }
+in  { packup       = mkScriptDerivation ( import ./packup       );
+      pack-notes   = mkScriptDerivation ( import ./pack-notes   );
+      unpack-notes = mkScriptDerivation ( import ./unpack-notes );
+    }

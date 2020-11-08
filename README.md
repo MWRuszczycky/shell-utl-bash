@@ -9,6 +9,8 @@ Collection of shell utility scripts written in Bash.
 | Name      | Intended function |
 |-----------|-------------------|
 | `packup`  | Archives, compresses and tags stuff for backup using 7z. |
+| `pack-notes` | Archives, compresses and tags `~/Documents/notes` removing builds. |
+| `unpack-notes` | Decompresses and rebuilds `~/Documents/notes` from a compressed archive. |
 
 ## Maintaining and installing scripts on NixOS
 
