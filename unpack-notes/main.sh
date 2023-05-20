@@ -77,7 +77,7 @@ elif [ -e "${notesHome}/notes" ]; then
     exit 1
 
 else
-    7z x "${achive}" -o"${notesHOME}"
+    7z x "${archive}" -o"${notesHOME}"
 fi
 
 trash "${archive}"
