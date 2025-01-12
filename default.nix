@@ -13,7 +13,7 @@ let mkScriptDerivation = pkg:
             ; src          = "${path}/main.sh"
             ; phases       = "installPhase fixupPhase"
             ; installPhase = installer
-            ; meta         = { license     = stdenv.lib.licenses.bsd3
+            ; meta         = { license     = lib.licenses.bsd3
                              ; maintainers = [ "Mark W. Ruszczycky" ]
                              ; description = pkg.description
                              ; }
