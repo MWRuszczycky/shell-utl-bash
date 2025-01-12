@@ -18,14 +18,31 @@ makeOrphan() {
     mv ${1}/* "${orphan}"
 }
 
+# Move the old builds from the old notes to the new notes in the
+# temporary buffer directory.
+# Arg 1: Old notes directory with the previous builds.
+# Arg 2: Buffer directory with the new notes but no builds.
+# Arg 3: Orphan directory in the buffer directory.
+# When this finishes, the new notes in the buffer will contain the
+# builds from the old notes. Any builds that could not be moved will
+# be orphaned in the orphan directory of the buffer.
 moveBuilds() {
     for x in $( find ${1} -type d -name "build" ); do
+        # Create path (targetPath) for the build in the buffer mirror
+        # that in the old notes directory.
         local sourcePath="${x%/build}"
         local buildPath="${sourcePath#${notesHome}/notes}"
         local targetPath="${2}${buildPath}"
 
         echo -n "Moving build from ${buildPath} .. "
 
+        # Attempt to move the build to the buffer. This will fail if
+        # (1) The new notes already have the build being moved.
+        #     Should not happend if notes packaged correctly.
+        # (2) The new notes do not have a directory for the build.
+        #     May happen if notes have been deleted in the new notes.
+        # If this happens, the old build is an orphan and moved to
+        # the orphan directory in the buffer.
         if [ -e "${targetPath}/build" ]; then
             echo -e "\e[38;5;214malready exists in new notes\e[0m"
             makeOrphan ${x} ${3}
@@ -63,11 +80,11 @@ elif [ -d "${notesHome}/notes" ]; then
     mkdir "${orphanPath}"
     7z x "${archive}" -o"${bufferPath}"
     moveBuilds "${notesHome}/notes/content" "${bufferPath}/notes" "${orphanPath}"
-    trash "${notesHome}/notes"
+    rm -r "${notesHome}/notes"
     mv "${bufferPath}/notes" "${notesHome}"
     updateBuilds "${notesHome}/notes/content"
 
-    if [ -z "$( ls -A ${orphanPath})" ];
+    if [ -z "$( ls -A ${orphanPath} )" ];
         then rmdir "${orphanPath}" && rmdir "${bufferPath}"
         else echo -e "\e[38;5;214mThere were orphan builds\e[0m"
     fi
@@ -80,4 +97,4 @@ else
     7z x "${archive}" -o"${notesHOME}"
 fi
 
-trash "${archive}"
+rm "${archive}"

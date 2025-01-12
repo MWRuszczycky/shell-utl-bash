@@ -13,7 +13,7 @@ compress() {
             return
     fi
 
-    theDate=$(date +"%m%d%y")
+    theDate=$(date +"%y%m%d")
     base=$(basename -- "${1}")
     out="${base%.*}-$(hostname)-${theDate}.7z"
 
