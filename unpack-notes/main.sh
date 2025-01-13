@@ -7,6 +7,7 @@
 # Global paths settings
 
 notesHome="${HOME}/Documents"
+notesIndex="${HOME}/Documents/notes/index.html"
 archive="${1}"
 
 # ===================================================================
@@ -95,6 +96,17 @@ elif [ -e "${notesHome}/notes" ]; then
 
 else
     7z x "${archive}" -o"${notesHOME}"
+fi
+
+# On Windows, we need to use Markdown in the main index
+# On Linux, we need to use HTML in teh main index
+echo -e "updating index "
+if [ "${OSTYPE}" = "msys" ]; then
+    echo "for windows"
+    sed -i 's/\.html/\.md/' ${notesIndex}
+else
+    echo "for linux"
+    sed -i "s/\.md/\.html/" ${notesIndex}
 fi
 
 rm "${archive}"
