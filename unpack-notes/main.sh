@@ -99,8 +99,8 @@ else
 fi
 
 # On Windows, we need to use Markdown in the main index
-# On Linux, we need to use HTML in teh main index
-echo -e "updating index "
+# On Linux, we need to use HTML in the main index
+echo -n "updating index "
 if [ "${OSTYPE}" = "msys" ]; then
     echo "for windows"
     sed -i 's/\.html/\.md/' ${notesIndex}
